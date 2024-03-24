@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Animation Game</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body{
+      background-color: rgb(40, 40, 40);
+    }
+    #game {
+  border: 24px groove rgb(255, 255, 255);
+  border-radius: 7vh;
+  margin: auto;
+  display: flex;
+  background-color:rgb(38, 38, 134);
+}
+
+  </style>
+</head>
+<body>
+  
+  <canvas id="game" width="auto" height="500px" ></canvas>
+  <script>
+    // Get the canvas element and its 2D context
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+// Define the FPS and the time interval between frames
+const FPS = 10;
+const interval = 180/ FPS;
+document.getElementById("game").style.boxShadow = "0 0 32px midnightblue";
+
+// Define the speed and direction of the ball
+const ballSpeed = 8;
+let ballX = 70; // initial x position of the ball
+let ballY = 277; // initial y position of the ball
+let ballDX = ballSpeed; // change in x position of the ball
+let ballDY = ballSpeed; // change in y position of the ball
+
+// Define the color and size of the ball
+const ballColor = "white";
+const ballRadius = 12;
+// Draw a circle with a given color, radius, and position
+function drawCircle(color, radius, x, y) {
+  ctx.fillStyle = color; // set the fill color
+  ctx.beginPath(); // start a new path
+  ctx.arc(x, y, radius, 0, Math.PI * 4); // draw a circle
+  ctx.fill(); // fill the circle
+}
+
+// Clear the canvas
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // clear the entire canvas
+}
+
+document.getElementById('game').style.aspectRatio = "auto";
+
+// Check for collisions and bounce the ball
+function bounceBall() {
+  // If the ball hits the left or right edge, reverse the x direction
+  if (ballX + ballRadius > canvas.width || ballX - ballRadius < 0) {
+    ballDX = -ballDX;
+  }
+
+  // If the ball hits the top or bottom edge, reverse the y direction
+  if (ballY + ballRadius > canvas.height || ballY - ballRadius < 0) {
+    ballDY = -ballDY;
+  }
+}
+
+// Run the game loop
+function gameLoop() {
+  // Clear the canvas
+  clearCanvas();
+
+  // Draw the ball
+  drawCircle(ballColor, ballRadius, ballX, ballY);
+
+  // Update the ball position
+  ballX += ballDX;
+  ballY += ballDY;
+
+  // Check for collisions and bounce the ball
+  bounceBall();
+}
+
+// Start the game loop
+setInterval(gameLoop, interval);
+
+
+  </script>
+</body>
+</html>
